@@ -808,9 +808,7 @@ body {
   padding: 0;
   background: var(--color-paper-base);
   overflow: hidden;
-  /* 让内部 .result-content 接管滚动（.page 用 absolute inset:0 截断了高度传递） */
-  display: flex;
-  flex-direction: column;
+  /* .page.active 已提供 display:flex + flex-direction:column，此处不覆盖避免页面常驻顶层 */
 }
 
 .result-header {
