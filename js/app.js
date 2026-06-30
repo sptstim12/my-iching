@@ -266,6 +266,21 @@ function addMotionListener() {
 
 // 注意：不再在 shake-btn 点击时自动请求 DeviceMotion 权限（避免 iOS 权限弹窗打断摇签体验）
 
+// ============ 摇一摇默认开启 ============
+(function autoEnableShake() {
+  if (!window.DeviceMotionEvent) return;           // 不支持的直接跳过
+  // iOS 需要用户手势才弹出权限对话框，非 iOS 直接开启
+  if (typeof DeviceMotionEvent.requestPermission !== 'function') {
+    shakeToggleActive = true;
+    addMotionListener();
+    var toggle = document.getElementById('shake-toggle');
+    if (toggle) {
+      toggle.classList.add('active');
+      toggle.textContent = '⚡ 摇一摇 · 已开启';
+    }
+  }
+})();
+
 // ============ 起卦逻辑 ============
 function startDivination() {
   if (isDivining) return;

@@ -807,14 +807,16 @@ body {
   justify-content: flex-start;
   padding: 0;
   background: var(--color-paper-base);
-  overflow: hidden;
-  /* .page.active 已提供 display:flex + flex-direction:column，此处不覆盖避免页面常驻顶层 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* 移除 overflow:hidden，让整页自然滚动；Header sticky 吸附在顶部 */
 }
 
 .result-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
-  padding: calc(var(--space-3) + var(--safe-top)) var(--space-4) var(--space-3);
+  padding: calc(var(--space-2) + var(--safe-top)) var(--space-4) var(--space-2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -923,17 +925,12 @@ body {
    ============================================================ */
 
 .result-content {
-  flex: 1 1 0;
-  min-height: 0;
   width: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  padding: var(--space-3) var(--space-4) calc(var(--space-8) + var(--safe-bottom));
+  padding: var(--space-2) var(--space-4) calc(var(--space-6) + var(--safe-bottom));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 /* ============================================================
@@ -947,7 +944,7 @@ body {
   background-color: var(--color-paper-light);
   border: 1px solid var(--color-paper-mid);
   border-radius: var(--radius-md);
-  padding: var(--space-4) var(--space-4) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   color: var(--color-ink);
   box-shadow: var(--shadow-paper);
   animation: cardEnter var(--duration-slow) var(--ease-out);
@@ -1030,7 +1027,7 @@ body {
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   color: var(--color-paper-light);
-  margin: 0 auto var(--space-4);
+  margin: 0 auto var(--space-2);
   letter-spacing: var(--tracking-cn);
   border-radius: var(--radius-xs);
   box-shadow: 0 1px 2px var(--color-shadow-soft);
@@ -1059,7 +1056,7 @@ body {
   font-family: var(--font-title);
   font-size: var(--text-2xl);
   color: var(--color-vermilion);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-2);
   letter-spacing: var(--tracking-cn-lg);
   text-align: center;
   position: relative;
@@ -1073,10 +1070,10 @@ body {
   font-size: var(--text-md);
   line-height: var(--line-loose);
   color: var(--color-ink);
-  padding: var(--space-5) var(--space-5);
+  padding: var(--space-3) var(--space-4);
   background: linear-gradient(135deg, var(--color-paper-mid) 0%, transparent 100%);
   border-left: 3px solid var(--color-vermilion);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-2);
   position: relative;
   letter-spacing: 0.05em;
   text-align: center;
@@ -1107,7 +1104,7 @@ body {
   font-size: var(--text-sm);
   line-height: 1.95;
   color: var(--color-ink-mid);
-  padding: var(--space-4) 0 var(--space-2);
+  padding: var(--space-2) 0 var(--space-1);
   border-top: 1px dashed var(--color-paper-deep);
   text-align: justify;
 }
@@ -1127,7 +1124,7 @@ body {
 .gua-symbol-display {
   font-size: 32px;
   text-align: center;
-  margin: var(--space-1) 0 var(--space-2);
+  margin: 0 0 var(--space-1);
   color: var(--color-ink);
   font-family: var(--font-sans);
   line-height: 1.4;
@@ -1157,7 +1154,7 @@ body {
   font-size: var(--text-xl);
   color: var(--color-vermilion);
   text-align: center;
-  margin-bottom: var(--space-1);
+  margin-bottom: 0;
   letter-spacing: var(--tracking-cn-lg);
 }
 
@@ -1166,7 +1163,7 @@ body {
   font-size: var(--text-xs);
   color: var(--color-ink-light);
   text-align: center;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-2);
   letter-spacing: var(--tracking-wide);
 }
 
@@ -1175,7 +1172,7 @@ body {
   font-size: var(--text-base);
   line-height: 1.85;
   color: var(--color-ink);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2) var(--space-3);
   background: linear-gradient(135deg, var(--color-paper-mid) 0%, transparent 100%);
   border-left: 3px solid var(--color-vermilion);
   margin-bottom: var(--space-2);
@@ -1189,7 +1186,7 @@ body {
   font-family: var(--font-title);
   font-size: var(--text-sm);
   color: var(--color-ink-mid);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
   padding: var(--space-2) var(--space-3);
   background: var(--color-paper-mid);
   border-radius: var(--radius-sm);
@@ -1200,8 +1197,8 @@ body {
 
 /* 变卦区 */
 .bian-gua-section {
-  margin-top: var(--space-5);
-  padding-top: var(--space-5);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
   border-top: 1px dashed var(--color-paper-deep);
   position: relative;
 }
@@ -1235,8 +1232,8 @@ body {
 
 /* 动爻爻辞 */
 .dong-yaoci {
-  margin-top: var(--space-5);
-  padding-top: var(--space-5);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
   border-top: 1px dashed var(--color-paper-deep);
 }
 
@@ -1343,7 +1340,7 @@ body {
   font-size: var(--text-sm);
   color: var(--color-ink-qing);
   letter-spacing: var(--tracking-cn);
-  margin: var(--space-3) 0 var(--space-2);
+  margin: var(--space-2) 0 var(--space-1);
   position: relative;
   display: flex;
   align-items: center;
