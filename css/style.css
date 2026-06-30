@@ -1,5 +1,6 @@
 /* ============================================================
    易经灵机 - 主样式 · 宣纸墨韵方案
+   设计师：UI Designer
    设计理念：宣纸为底，水墨为骨，青绿点睛，朱砂提神
    ============================================================ */
 
@@ -262,9 +263,10 @@ body {
   display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: var(--space-6) var(--space-5);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity var(--duration-normal) var(--ease-out),
@@ -401,7 +403,7 @@ body {
   transform: translate(-50%, -50%);
   width: 240px;
   height: 240px;
-  opacity: 0.18;
+  opacity: 0.35;
   pointer-events: none;
   z-index: 0;
   color: var(--color-vermilion);
@@ -805,6 +807,7 @@ body {
   justify-content: flex-start;
   padding: 0;
   background: var(--color-paper-base);
+  overflow: hidden;
 }
 
 .result-header {
@@ -922,6 +925,7 @@ body {
   flex: 1;
   width: 100%;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: var(--space-3) var(--space-4) calc(var(--space-8) + var(--safe-bottom));
   display: flex;
   flex-direction: column;
@@ -1250,45 +1254,16 @@ body {
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--color-vermilion);
   position: relative;
-  cursor: pointer;
-}
-
-.dong-yaoci .dong-yao-item > summary.yao-position {
-  list-style: none;
-  cursor: pointer;
-  user-select: none;
-  padding: 2px 0;
-}
-
-.dong-yaoci .dong-yao-item > summary.yao-position::-webkit-details-marker {
-  display: none;
-}
-
-.dong-yaoci .dong-yao-item > summary.yao-position::before {
-  content: '▸';
-  display: inline-block;
-  margin-right: 6px;
-  color: var(--color-vermilion);
-  transition: transform 0.2s ease;
-}
-
-.dong-yaoci .dong-yao-item[open] > summary.yao-position::before {
-  transform: rotate(90deg);
-}
-
-.dong-yao-item[open] > .yao-text,
-.dong-yao-item[open] > .yao-sub-section {
-  margin-top: var(--space-2);
 }
 
 .dong-yao-item .yao-position {
   font-family: var(--font-title);
   font-size: var(--text-sm);
   color: var(--color-vermilion);
-  margin-bottom: 0;
+  margin-bottom: var(--space-2);
   letter-spacing: var(--tracking-wide);
   font-weight: var(--weight-semibold);
-  display: inline;
+  display: block;
 }
 
 .dong-yao-item .yao-text {
@@ -1298,6 +1273,7 @@ body {
   font-family: var(--font-body);
   text-align: justify;
   margin-bottom: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .yao-sub-section {
@@ -1372,13 +1348,6 @@ body {
   visibility: visible !important;
   opacity: 1 !important;
   overflow: visible;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.2s ease;
-}
-
-.section-label:hover {
-  color: var(--color-vermilion);
 }
 
 .section-label::before,
@@ -1394,26 +1363,6 @@ body {
   background: linear-gradient(90deg, var(--color-paper-deep), transparent);
 }
 
-/* 可折叠指示器 */
-.section-label::marker { display: none; }
-details.section-block > summary.section-label {
-  list-style: none;
-}
-details.section-block > summary.section-label::-webkit-details-marker { display: none; }
-details.section-block > summary.section-label::before {
-  background: none;
-  flex: 0 0 8px;
-  width: 8px; height: 8px;
-  border-right: 1.5px solid var(--color-vermilion);
-  border-bottom: 1.5px solid var(--color-vermilion);
-  transform: rotate(45deg);
-  margin-right: var(--space-2);
-  transition: transform 0.2s ease;
-  opacity: 1;
-}
-details.section-block[open] > summary.section-label::before {
-  transform: rotate(-135deg);
-}
 
 .section-content {
   display: block !important;

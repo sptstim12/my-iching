@@ -522,33 +522,33 @@ function renderGuaResult(guaResult) {
     '<div class="gua-text">' + (benGuaData ? normalizeChineseText(benGuaData.text) : '卦辞缺失') + '</div>' +
     (benGuaData && benGuaData.xiangZhuan ? '<div class="gua-xiang">象曰：' + normalizeChineseText(benGuaData.xiangZhuan) + '</div>' : '');
 
-  // 白话文解释（折叠面板）
+  // 白话文解释（全部展开）
   var baihuaText = (benGuaData && benGuaData.baihua) ? formatParagraphs(benGuaData.baihua) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无白话释义）</p>';
-  html += '<details class="section-block" open>' +
-    '<summary class="section-label">白话释义</summary>' +
+  html += '<div class="section-block">' +
+    '<div class="section-label">白话释义</div>' +
     '<div class="section-content baihua-section">' + baihuaText + '</div>' +
-    '</details>';
+    '</div>';
 
-  // 《断易天机》解（折叠面板，默认折叠）
+  // 《断易天机》解（全部展开）
   var duanyiText = (benGuaData && benGuaData.duanyi) ? formatParagraphs(benGuaData.duanyi) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无《断易天机》解）</p>';
-  html += '<details class="section-block">' +
-    '<summary class="section-label">《断易天机》解</summary>' +
+  html += '<div class="section-block">' +
+    '<div class="section-label">《断易天机》解</div>' +
     '<div class="section-content duanyi-section">' + duanyiText + '</div>' +
-    '</details>';
+    '</div>';
 
-  // 邵雍解（折叠面板，默认折叠）
+  // 邵雍解（全部展开）
   var shaoyongText = (benGuaData && benGuaData.shaoyong) ? formatParagraphs(benGuaData.shaoyong) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无邵雍解）</p>';
-  html += '<details class="section-block">' +
-    '<summary class="section-label">邵雍解</summary>' +
+  html += '<div class="section-block">' +
+    '<div class="section-label">邵雍解</div>' +
     '<div class="section-content shaoyong-section">' + shaoyongText + '</div>' +
-    '</details>';
+    '</div>';
 
-  // 传统解卦（折叠面板，默认折叠）
+  // 传统解卦（全部展开）
   var chuantongText = (benGuaData && benGuaData.chuantong) ? formatParagraphs(benGuaData.chuantong) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无传统解卦）</p>';
-  html += '<details class="section-block">' +
-    '<summary class="section-label">传统解卦</summary>' +
+  html += '<div class="section-block">' +
+    '<div class="section-label">传统解卦</div>' +
     '<div class="section-content chuantong-section">' + chuantongText + '</div>' +
-    '</details>';
+    '</div>';
 
   // 变卦
   if (guaResult.hasBianGua && bianGuaData) {
@@ -566,10 +566,10 @@ function renderGuaResult(guaResult) {
 
     // 变卦白话释义
     if (bianGuaData.baihua) {
-      html += '<details class="section-block" open>' +
-        '<summary class="section-label" style="margin-top: var(--space-3);">变卦 · 白话释义</summary>' +
+      html += '<div class="section-block">' +
+        '<div class="section-label" style="margin-top: var(--space-3);">变卦 · 白话释义</div>' +
         '<div class="section-content baihua-section">' + formatParagraphs(bianGuaData.baihua) + '</div>' +
-        '</details>';
+        '</div>';
     }
   }
 
@@ -581,13 +581,13 @@ function renderGuaResult(guaResult) {
       var yaoBaihua = y.baihua ? formatParagraphs(y.baihua) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无白话释义）</p>';
       var yaoShaoyong = y.shaoyong ? formatParagraphs(y.shaoyong) : '<p class="text-paragraph" style="color:var(--color-ink-light);">（暂无邵雍解）</p>';
       var yaoTextShort = normalizeChineseText(y.text).substring(0, 18);
-      html += '<details class="dong-yao-item">' +
-        '<summary class="yao-position">' + y.position + ' · ' + yaoTextShort + '…</summary>' +
+      html += '<div class="dong-yao-item">' +
+        '<div class="yao-position">' + y.position + ' · ' + yaoTextShort + '…</div>' +
         '<div class="yao-text">' + normalizeChineseText(y.text) + '</div>' +
         (y.xiang ? '<div class="yao-text">象曰：' + normalizeChineseText(y.xiang) + '</div>' : '') +
         '<div class="yao-sub-section"><span class="yao-sub-label">白话释义</span>' + yaoBaihua + '</div>' +
         '<div class="yao-sub-section"><span class="yao-sub-label">邵雍解</span>' + yaoShaoyong + '</div>' +
-        '</details>';
+        '</div>';
     });
     html += '</div>';
   }
