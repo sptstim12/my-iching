@@ -1513,13 +1513,13 @@ body {
   animation: phraseIn var(--duration-slow) var(--ease-out) forwards;
 }
 
-/* 视觉出场顺序：静心 → 诚心 → 问心 → 红字提示 → 入门按钮 */
+/* 视觉出场顺序：静心 → 诚心 → 问心 → 红字提示 → 入门按钮（总时长 ~2.2s） */
 .intro-seal  { animation: phraseIn var(--duration-slow) var(--ease-out) 0.1s both; }
-.intro-title { animation: phraseIn var(--duration-slow) var(--ease-out) 0.3s both; }
-.intro-phrase[data-step="1"] { animation-delay: 0.9s; }   /* 静心 */
-.intro-phrase[data-step="2"] { animation-delay: 1.5s; }   /* 诚心 */
-.intro-phrase[data-step="3"] { animation-delay: 2.1s; }   /* 问心 */
-.intro-phrase[data-step="4"] { animation-delay: 2.7s; }   /* 红字提示 */
+.intro-title { animation: phraseIn var(--duration-slow) var(--ease-out) 0.25s both; }
+.intro-phrase[data-step="1"] { animation-delay: 0.55s; }   /* 静心 */
+.intro-phrase[data-step="2"] { animation-delay: 0.9s; }    /* 诚心 */
+.intro-phrase[data-step="3"] { animation-delay: 1.25s; }   /* 问心 */
+.intro-phrase[data-step="4"] { animation-delay: 1.6s; }    /* 红字提示 */
 
 @keyframes phraseIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -1529,7 +1529,7 @@ body {
 .intro-btn {
   margin-top: var(--space-8);
   opacity: 0;
-  animation: phraseIn var(--duration-slow) var(--ease-out) 3.3s forwards;
+  animation: phraseIn var(--duration-slow) var(--ease-out) 2.2s forwards;
 }
 
 /* ============================================================

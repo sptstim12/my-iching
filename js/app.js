@@ -146,6 +146,8 @@ document.querySelectorAll('.tab-item').forEach(tab => {
 // ============ 摇签逻辑 ============
 function startShake() {
   if (isShaking) return;
+  // 引导页未关闭时不响应
+  if (document.getElementById('intro-overlay')) return;
   isShaking = true;
 
   const btn = document.getElementById('shake-btn');
@@ -255,6 +257,8 @@ function addMotionListener() {
   window.addEventListener('devicemotion', (e) => {
     const acc = e.accelerationIncludingGravity;
     if (!acc) return;
+    // 引导页未关闭时不触发摇一摇
+    if (document.getElementById('intro-overlay')) return;
     const totalAcc = Math.sqrt(acc.x ** 2 + acc.y ** 2 + acc.z ** 2);
     const now = Date.now();
     if (totalAcc > shakeThreshold && now - lastShakeTime > 3000 && !isShaking && currentTab === 'shake') {
