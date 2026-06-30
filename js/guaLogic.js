@@ -111,7 +111,7 @@ function getGua() {
   const YAO_TYPE = { 6: '六', 7: '九', 8: '六', 9: '九' };
 
   let yaoDetails = yaos.map((y, i) => ({
-    position: i === 0 ? `${YAO_TYPE[y]}初` : i === 5 ? `上${YAO_TYPE[y]}` : `${YAO_TYPE[y]}${POS_NAMES[i]}`,
+    position: i === 0 ? `初${YAO_TYPE[y]}` : i === 5 ? `上${YAO_TYPE[y]}` : `${YAO_TYPE[y]}${POS_NAMES[i]}`,
     value: y,
     isYang: yaoToYinYang(y) === 1,
     isDong: isDongYao(y),

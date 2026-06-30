@@ -984,7 +984,7 @@ body {
   left: var(--space-3);
   width: 28px;
   height: 28px;
-  background-image: url('../images/corner-ornament.png');
+  background-image: url('../images/corner-ornament.webp');
   background-size: contain;
   background-repeat: no-repeat;
   opacity: 0.5;
@@ -998,7 +998,7 @@ body {
   right: var(--space-3);
   width: 28px;
   height: 28px;
-  background-image: url('../images/corner-ornament.png');
+  background-image: url('../images/corner-ornament.webp');
   background-size: contain;
   background-repeat: no-repeat;
   opacity: 0.5;
@@ -1587,8 +1587,8 @@ body {
   .action-btn { font-size: var(--text-base); padding: var(--space-3) var(--space-8); }
   .result-card { padding: var(--space-3) var(--space-3) var(--space-3); }
   .qian-poem, .gua-text { font-size: var(--text-base); }
-  .gua-name { font-size: var(--text-xl); }
-  .qian-name { font-size: var(--text-xl); }
+  .qian-result-card .qian-name,
+  .gua-result-card .gua-name { font-size: var(--text-xl); }
 }
 
 /* 平板及以上 */
