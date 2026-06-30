@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><head><title>test</title>
+<style>body{margin:0;padding:0;}iframe{width:440px;height:900px;border:none;}</style>
+</head>
+<body>
+<iframe src="http://127.0.0.1:8765/index.html?skip_intro=1" id="f"></iframe>
+<script>
+const f = document.getElementById('f');
+f.onload = function() {
+  setTimeout(() => {
+    try { f.contentWindow.startShake(); } catch(e) { document.title = 'ERR:' + e.message; }
+  }, 1500);
+};
+</script>
+</body></html>

@@ -1057,7 +1057,7 @@ body {
   font-family: var(--font-title);
   font-size: var(--text-2xl);
   color: var(--color-vermilion);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
   letter-spacing: var(--tracking-cn-lg);
   text-align: center;
   position: relative;
@@ -1071,7 +1071,7 @@ body {
   font-size: var(--text-md);
   line-height: var(--line-loose);
   color: var(--color-ink);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2) var(--space-3);
   background: linear-gradient(135deg, var(--color-paper-mid) 0%, transparent 100%);
   border-left: 3px solid var(--color-vermilion);
   margin-bottom: var(--space-2);
@@ -1585,9 +1585,10 @@ body {
   .header h1 { font-size: var(--text-xl); letter-spacing: var(--tracking-cn); }
   .tab-item { font-size: var(--text-base); }
   .action-btn { font-size: var(--text-base); padding: var(--space-3) var(--space-8); }
-  .result-card { padding: var(--space-6) var(--space-4) var(--space-5); }
+  .result-card { padding: var(--space-3) var(--space-3) var(--space-3); }
   .qian-poem, .gua-text { font-size: var(--text-base); }
   .gua-name { font-size: var(--text-xl); }
+  .qian-name { font-size: var(--text-xl); }
 }
 
 /* 平板及以上 */
