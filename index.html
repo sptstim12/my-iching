@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="易经灵机 · 抽签与起卦的传统文化沉浸体验">
+  <meta name="theme-color" content="#F4ECDD">
+  <title>易经灵机 · 传统文化沉浸体验</title>
+
+  <!-- 字体：标题用马善政书法体，正文用思源宋体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- 顶部标题栏 -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <span class="header-seal" aria-hidden="true">易</span>
+
+      <svg class="header-deco-left" width="36" height="14" viewBox="0 0 36 14" aria-hidden="true">
+        <path d="M0 7 Q9 0 18 7 Q27 14 36 7" stroke="#2F4A4A" fill="none" stroke-width="1.2"/>
+        <path d="M4 7 Q13 2 22 7 Q31 12 36 7" stroke="#2F4A4A" fill="none" stroke-width="0.6" opacity="0.5"/>
+      </svg>
+
+      <h1>易经灵机</h1>
+
+      <svg class="header-deco-right" width="36" height="14" viewBox="0 0 36 14" aria-hidden="true">
+        <path d="M0 7 Q9 14 18 7 Q27 0 36 7" stroke="#2F4A4A" fill="none" stroke-width="1.2"/>
+        <path d="M0 7 Q5 12 14 7 Q23 2 32 7" stroke="#2F4A4A" fill="none" stroke-width="0.6" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="subtitle">传统文化 · 沉浸体验</div>
+  </header>
+
+  <!-- Tab 导航 -->
+  <nav class="tab-bar" role="tablist" aria-label="主导航">
+    <button class="tab-item active" data-tab="shake" id="tab-shake" role="tab" aria-selected="true" aria-controls="page-shake">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 2L8 2L8 18Q8 22 4 22Z" fill="currentColor" opacity="0.7"/>
+        <path d="M12 2L16 2L16 18Q16 22 12 22Z" fill="currentColor" opacity="0.7"/>
+        <rect x="6" y="6" width="8" height="2" rx="1" fill="currentColor"/>
+      </svg>
+      <span>签诗</span>
+    </button>
+    <div class="tab-divider" aria-hidden="true"></div>
+    <button class="tab-item" data-tab="divination" id="tab-divination" role="tab" aria-selected="false" aria-controls="page-divination">
+      <svg class="tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 2A10 10 0 0 1 12 22Z" fill="currentColor" opacity="0.6"/>
+        <circle cx="12" cy="7" r="1" fill="currentColor"/>
+        <circle cx="12" cy="17" r="1" fill="currentColor"/>
+      </svg>
+      <span>卦象</span>
+    </button>
+  </nav>
+
+  <!-- 页面区域 -->
+  <main class="page-area">
+
+    <!-- 签诗页（摇签） -->
+    <section class="page shake-page active" id="page-shake" role="tabpanel" aria-labelledby="tab-shake">
+      <div class="page-pattern" aria-hidden="true"></div>
+      <div class="sign-container">
+        <div class="sign-tube" id="sign-tube">
+          <img src="images/sign-tube.webp" alt="签筒" class="sign-tube-img" loading="lazy">
+          <div class="tube-glow" id="tube-glow" aria-hidden="true"></div>
+        </div>
+        <div class="tube-base-seal" aria-hidden="true">灵签</div>
+      </div>
+      <button class="action-btn" id="shake-btn" onclick="startShake()" aria-label="摇签体验">
+        <span class="btn-seal" aria-hidden="true">签</span>
+        <span class="btn-text">摇 签 体 验</span>
+      </button>
+      <div class="shake-tip" id="shake-tip">
+        <span class="shake-tip-text" id="shake-tip-text">轻触按钮感应灵签</span>
+        <span class="shake-toggle-hint" id="shake-toggle-hint"> · <button class="shake-toggle" id="shake-toggle" onclick="toggleDeviceMotion(event)" aria-label="开启摇一摇" title="开启后摇晃手机即可摇签">⚡ 摇一摇</button></span>
+      </div>
+    </section>
+
+    <!-- 卦象页（起卦） -->
+    <section class="page divination-page" id="page-divination" role="tabpanel" aria-labelledby="tab-divination">
+      <div class="page-pattern" aria-hidden="true"></div>
+
+      <!-- 太极图 + 背景八卦方位图（同心居中） -->
+      <div class="taiji-container">
+        <div class="bagua-decoration" aria-hidden="true">
+          <svg viewBox="0 0 400 400" class="bagua-svg">
+            <!-- 外圆 - 先天八卦方位 -->
+            <circle cx="200" cy="200" r="180" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+            <circle cx="200" cy="200" r="155" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+            <circle cx="200" cy="200" r="125" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+
+            <!-- 八卦符号位置（8个方位） -->
+            <!-- 乾 - 南 -->
+            <g class="bagua-pos" transform="translate(200, 35)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☰</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">乾</text>
+            </g>
+            <!-- 兑 - 东南 -->
+            <g class="bagua-pos" transform="translate(316, 84)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☱</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">兑</text>
+            </g>
+            <!-- 离 - 东 -->
+            <g class="bagua-pos" transform="translate(365, 200)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☲</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">离</text>
+            </g>
+            <!-- 震 - 东北 -->
+            <g class="bagua-pos" transform="translate(316, 316)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☳</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">震</text>
+            </g>
+            <!-- 巽 - 西南 -->
+            <g class="bagua-pos" transform="translate(84, 84)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☴</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">巽</text>
+            </g>
+            <!-- 坎 - 西 -->
+            <g class="bagua-pos" transform="translate(35, 200)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☵</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">坎</text>
+            </g>
+            <!-- 艮 - 西北 -->
+            <g class="bagua-pos" transform="translate(84, 316)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☶</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">艮</text>
+            </g>
+            <!-- 坤 - 北 -->
+            <g class="bagua-pos" transform="translate(200, 365)">
+              <text text-anchor="middle" dominant-baseline="middle" font-size="22">☷</text>
+              <text text-anchor="middle" y="22" font-size="11" opacity="0.6">坤</text>
+            </g>
+
+            <!-- 中心 -->
+            <circle cx="200" cy="200" r="8" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+          </svg>
+        </div>
+        <img src="images/taiji.png" alt="太极图" class="taiji-img" loading="lazy">
+      </div>
+
+      <!-- 推演按钮 -->
+      <button class="action-btn" id="divination-btn" onclick="startDivination()" aria-label="推演卦象">
+        <span class="btn-seal" aria-hidden="true">卦</span>
+        <span class="btn-text">推 演 卦 象</span>
+      </button>
+
+      <!-- 解卦按钮（仅在有结果时显示） -->
+      <button class="action-btn btn-secondary" id="interpret-btn" style="display:none;" onclick="goInterpret()" aria-label="解卦">
+        <span class="btn-seal" aria-hidden="true">解</span>
+        <span class="btn-text">解 卦</span>
+      </button>
+
+      <!-- 逐爻呈现的卦象（堆叠式，从下往上） -->
+      <div class="gua-stacking-container" id="gua-stacking" aria-live="polite">
+        <div class="gua-stack-label" id="gua-stack-label">卦象未起</div>
+        <div class="gua-stack-lines" id="gua-stack-lines">
+          <!-- 动态填充 6 个爻位（自下而上）-->
+          <div class="yao-slot" data-pos="5"><span class="yao-svg-placeholder"></span></div>
+          <div class="yao-slot" data-pos="4"><span class="yao-svg-placeholder"></span></div>
+          <div class="yao-slot" data-pos="3"><span class="yao-svg-placeholder"></span></div>
+          <div class="yao-slot" data-pos="2"><span class="yao-svg-placeholder"></span></div>
+          <div class="yao-slot" data-pos="1"><span class="yao-svg-placeholder"></span></div>
+          <div class="yao-slot" data-pos="0"><span class="yao-svg-placeholder"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结果页 -->
+    <section class="page result-page" id="page-result" role="tabpanel" aria-labelledby="result-title">
+      <div class="result-header">
+        <button class="back-btn" onclick="goBack()" aria-label="返回">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>返回</span>
+        </button>
+        <div class="result-title" id="result-title">签诗赏析</div>
+        <div class="result-actions">
+          <button class="icon-btn" id="fav-btn" onclick="toggleFavorite()" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M6 4v17l6-4 6 4V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="icon-btn" onclick="tryAgain()" aria-label="再求一签" title="再求一签">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 4v4h-4M21 12a9 9 0 0 1-15 6.7L3 16M3 20v-4h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="result-content" id="result-content"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- 首次访问引导 -->
+<div class="intro-overlay" id="intro-overlay" role="dialog" aria-labelledby="intro-title">
+  <div class="intro-seal" aria-hidden="true">易</div>
+  <h2 class="intro-title" id="intro-title">易 经 灵 机</h2>
+  <p class="intro-phrase">静 心</p>
+  <p class="intro-phrase">诚 心</p>
+  <p class="intro-phrase">问 心</p>
+  <p class="intro-phrase" style="margin-top: var(--space-3); color: var(--color-vermilion);">请默念所问，再启灵签</p>
+  <button class="action-btn intro-btn" onclick="dismissIntro()">
+    <span class="btn-text">入 门</span>
+  </button>
+</div>
+
+<!-- 数据和逻辑脚本 -->
+<script src="js/data/qianData.js"></script>
+<script src="js/data/gua64Data.js"></script>
+<script src="js/guaLogic.js"></script>
+<script src="js/app.js"></script>
+
+<!-- 全局错误捕获（调试用，正式版可移除） -->
+<script>
+window.onerror = function(msg, url, line, col, error) {
+  var div = document.createElement('div');
+  div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#b43a3a;color:#fff;padding:8px 12px;font-size:12px;z-index:9999;max-height:80px;overflow:auto;';
+  div.textContent = 'JS Error: ' + msg + ' (line ' + line + ')';
+  document.body.appendChild(div);
+  return false;
+};
+</script>
+
+</body>
+</html>

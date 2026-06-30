@@ -1,0 +1,1712 @@
+/* ============================================================
+   易经灵机 - 主样式 · 宣纸墨韵方案
+   设计理念：宣纸为底，水墨为骨，青绿点睛，朱砂提神
+   ============================================================ */
+
+@import url('./design-tokens.css');
+
+/* ============================================================
+   一、基础重置
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--line-normal);
+  color: var(--color-ink);
+  background: var(--color-paper-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* 禁止 iOS 弹性滚动带来的视觉异常 */
+  overscroll-behavior: none;
+}
+
+button { font-family: inherit; }
+img { display: block; max-width: 100%; }
+
+/* 自定义文本选中色 */
+::selection {
+  background: rgba(180, 58, 58, 0.18);
+  color: var(--color-ink);
+}
+
+/* ============================================================
+   二、整页宣纸底纹
+   ============================================================ */
+
+body {
+  background-color: var(--color-paper-base);
+  background-image:
+    /* 极淡的宣纸纤维纹理（用 data URI 兜底，避免额外资源请求） */
+    radial-gradient(ellipse at 20% 30%, rgba(95, 75, 50, 0.025) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(95, 75, 50, 0.02) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* 已移除宣纸纹理背景图 */
+
+/* ============================================================
+   三、应用容器
+   ============================================================ */
+
+.app-container {
+  position: relative;
+  z-index: var(--z-content);
+  width: 100%;
+  min-height: 100vh;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper-light);
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================
+   四、顶部 Header
+   ============================================================ */
+
+.header {
+  position: relative;
+  padding: calc(var(--space-4) + var(--safe-top)) var(--space-4) var(--space-3);
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-paper-light) 0%, var(--color-paper-base) 100%);
+  border-bottom: 1px solid var(--color-paper-mid);
+  z-index: var(--z-header);
+  overflow: hidden;
+}
+
+/* 顶部细线装饰 */
+.header::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--space-3) + var(--safe-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 360px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-vermilion) 50%, transparent);
+  opacity: 0.5;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* "易" 字方印 */
+.header-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-vermilion);
+  color: var(--color-paper-light);
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 0 0 1px var(--color-vermilion-deep), var(--shadow-ink);
+  position: relative;
+  transform: rotate(-2deg);
+}
+
+.header-seal::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.header h1 {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-qing);
+  letter-spacing: var(--tracking-cn-lg);
+  line-height: 1;
+}
+
+.header-deco-left, .header-deco-right {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.header .subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-ink-light);
+  margin-top: var(--space-2);
+  letter-spacing: var(--tracking-cn);
+  position: relative;
+  z-index: 1;
+}
+
+.header .subtitle::before,
+.header .subtitle::after {
+  content: '·';
+  margin: 0 var(--space-2);
+  color: var(--color-vermilion);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   五、Tab 导航（书签式）
+   ============================================================ */
+
+.tab-bar {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  background: var(--color-paper-light);
+  border-bottom: 1px solid var(--color-paper-mid);
+  z-index: var(--z-header);
+  padding: 0 var(--space-6);
+}
+
+.tab-item {
+  flex: 1;
+  position: relative;
+  padding: var(--space-3) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  color: var(--color-ink-light);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  user-select: none;
+  border: none;
+  background: none;
+  letter-spacing: var(--tracking-cn);
+}
+
+.tab-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 3px;
+  background: var(--color-vermilion);
+  border-radius: 2px 2px 0 0;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.tab-item:hover:not(.active) {
+  color: var(--color-ink-qing);
+}
+
+.tab-item.active {
+  color: var(--color-vermilion);
+  font-weight: var(--weight-semibold);
+}
+
+.tab-item.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.tab-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: opacity var(--duration-fast);
+  opacity: 0.5;
+}
+
+.tab-item.active .tab-icon { opacity: 1; }
+
+.tab-divider {
+  width: 1px;
+  margin: var(--space-3) 0;
+  background: var(--color-paper-mid);
+  align-self: stretch;
+}
+
+/* ============================================================
+   六、页面切换与转场动画
+   ============================================================ */
+
+.page-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-5);
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.page.active {
+  display: flex;
+  animation: pageEnter var(--duration-slow) var(--ease-out) forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 页面底纹（极淡祥云） */
+.page-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(180, 58, 58, 0.025) 0%, transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(95, 154, 154, 0.03) 0%, transparent 35%);
+}
+
+/* 签诗页与卦象页通用背景 */
+.shake-page,
+.divination-page {
+  background: var(--color-paper-light);
+}
+
+/* 卦象页 - 留出空间给八卦方位图 */
+.divination-page {
+  position: relative;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-6);
+}
+
+/* ============================================================
+   七、签筒主视觉
+   ============================================================ */
+
+.sign-container {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  margin: var(--space-3) auto var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-tube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-tube-img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(95, 75, 50, 0.18));
+  transition: transform var(--duration-fast) var(--ease-out);
+  border-radius: var(--radius-sm);
+}
+
+/* 签筒光晕 - 暖色低不透明 */
+.tube-glow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(180, 58, 58, 0.10) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity var(--duration-normal);
+  border-radius: 50%;
+}
+
+.tube-glow.active { opacity: 1; }
+
+/* 签筒下方"承"字印章 */
+.tube-base-seal {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-vermilion);
+  background: var(--color-paper-light);
+  padding: 2px 10px;
+  border: 1px solid var(--color-vermilion);
+  border-radius: var(--radius-xs);
+  letter-spacing: var(--tracking-cn);
+  box-shadow: var(--shadow-ink);
+}
+
+/* 签筒摇动动画 */
+.sign-tube.shaking .sign-tube-img {
+  animation: shakeTubeReal 0.16s infinite alternate;
+}
+
+@keyframes shakeTubeReal {
+  0%   { transform: rotate(-10deg) translateX(-5px) translateY(-2px); }
+  50%  { transform: rotate(0deg) translateY(-8px); }
+  100% { transform: rotate(10deg) translateX(5px) translateY(-2px); }
+}
+
+/* ============================================================
+   八、太极图（含背景八卦方位图）
+   ============================================================ */
+
+.taiji-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: var(--space-2) auto var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* 八卦方位图 - 绝对定位充满整个太极容器，与太极图天然同心 */
+.taiji-container .bagua-decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--color-vermilion);
+  margin: 0;
+}
+
+.taiji-img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 4px 16px rgba(95, 75, 50, 0.20));
+  object-fit: contain;
+  z-index: 1;
+  animation: taijiBreath 4s var(--ease-in-out) infinite;
+}
+
+@keyframes taijiBreath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+/* 起卦中 - 太极快速旋转 */
+.taiji-container.spinning {
+  animation: taijiSpin 1.4s linear infinite;
+}
+
+@keyframes taijiSpin {
+  from { transform: rotate(0deg) scale(1.04); }
+  to   { transform: rotate(360deg) scale(1.04); }
+}
+
+/* ============================================================
+   九、操作按钮（朱砂 / 墨青 双色）
+   ============================================================ */
+
+.action-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 220px;
+  padding: var(--space-4) var(--space-10);
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  color: var(--color-paper-light);
+  background: linear-gradient(135deg, var(--color-vermilion) 0%, var(--color-vermilion-deep) 100%);
+  border: 1.5px solid var(--color-vermilion-deep);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  letter-spacing: var(--tracking-cn-lg);
+  transition: all var(--duration-normal) var(--ease-out);
+  user-select: none;
+  overflow: hidden;
+  margin-top: var(--space-2);
+  box-shadow: var(--shadow-glow-vermilion);
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-shadow-vermilion);
+  background: linear-gradient(135deg, var(--color-vermilion-light) 0%, var(--color-vermilion) 100%);
+}
+
+.action-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-ink);
+}
+
+.action-btn:focus-visible {
+  outline: 2px solid var(--color-vermilion);
+  outline-offset: 4px;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-btn .btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* 按钮中"压印"小装饰 */
+.action-btn .btn-seal {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: var(--font-title);
+  font-size: var(--text-2xs);
+  opacity: 0.5;
+  letter-spacing: 0;
+}
+
+.action-btn.shaking-active {
+  animation: pulseBtn 0.4s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes pulseBtn {
+  from { transform: scale(1); }
+  to   { transform: scale(1.04); }
+}
+
+/* 次要按钮 - 墨青色 */
+.action-btn.btn-secondary {
+  background: transparent;
+  color: var(--color-ink-qing);
+  border-color: var(--color-ink-qing);
+  box-shadow: none;
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-base);
+  min-width: 180px;
+  margin-top: var(--space-2);
+}
+
+.action-btn.btn-secondary:hover {
+  background: var(--color-ink-qing);
+  color: var(--color-paper-light);
+  box-shadow: var(--shadow-md);
+}
+
+/* 文字按钮 */
+.text-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-qing);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  letter-spacing: var(--tracking-cn);
+  transition: color var(--duration-fast);
+}
+
+.text-btn:hover { color: var(--color-vermilion); }
+
+/* ============================================================
+   十、提示文字
+   ============================================================ */
+
+.shake-tip {
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-ink-light);
+  letter-spacing: var(--tracking-cn);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+/* 摇一摇开关按钮 */
+.shake-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-ink-qing);
+  background: transparent;
+  border: 1px solid var(--color-ink-qing);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  cursor: pointer;
+  letter-spacing: 0;
+  transition: all var(--duration-fast);
+  opacity: 0.7;
+}
+
+.shake-toggle:hover {
+  opacity: 1;
+  background: rgba(47, 74, 74, 0.06);
+}
+
+.shake-toggle.active {
+  opacity: 1;
+  color: var(--color-paper);
+  background: var(--color-ink-qing);
+}
+
+/* ============================================================
+   十一、起卦逐爻进度区
+   ============================================================ */
+
+/* 八卦方位图 - 现已嵌套在 .taiji-container 内部，样式见 八、太极图 区块 */
+
+.bagua-pos {
+  fill: currentColor;
+  transition: opacity var(--duration-normal);
+}
+
+.bagua-pos text {
+  font-family: var(--font-sans);
+}
+
+/* 推演区堆叠容器 - 卦象逐爻呈现 */
+.gua-stacking-container {
+  position: relative;
+  margin-top: var(--space-3);
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: var(--z-content);
+}
+
+.gua-stack-label {
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-light);
+  letter-spacing: var(--tracking-cn);
+  text-align: center;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-paper-light);
+  border: 1px solid var(--color-paper-mid);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-xs);
+  min-width: 120px;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.gua-stack-label.active {
+  color: var(--color-vermilion);
+  border-color: var(--color-vermilion);
+  box-shadow: var(--shadow-glow-vermilion);
+}
+
+.gua-stack-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-paper-light);
+  border: 1px solid var(--color-paper-mid);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  min-height: 160px;
+  justify-content: center;
+}
+
+.yao-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 18px;
+  position: relative;
+}
+
+/* 爻符号 - 阳爻（实线） */
+.yao-yang {
+  width: 80px;
+  height: 8px;
+  background: linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-qing) 100%);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px var(--color-shadow-soft);
+  animation: yaoAppear 0.5s var(--ease-out) forwards;
+  opacity: 0;
+}
+
+/* 爻符号 - 阴爻（中间断开的双线） */
+.yao-yin {
+  display: flex;
+  width: 80px;
+  height: 8px;
+  gap: 8px;
+  animation: yaoAppear 0.5s var(--ease-out) forwards;
+  opacity: 0;
+}
+
+.yao-yin::before,
+.yao-yin::after {
+  content: '';
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-qing) 100%);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px var(--color-shadow-soft);
+}
+
+/* 动爻 - 阳爻（标红色圈） */
+.yao-yang.dong {
+  background: linear-gradient(180deg, var(--color-vermilion) 0%, var(--color-vermilion-deep) 100%);
+  box-shadow: 0 0 0 1px var(--color-vermilion), 0 0 8px var(--color-shadow-vermilion);
+  position: relative;
+}
+
+.yao-yang.dong::after {
+  content: '○';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-paper-light);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* 动爻 - 阴爻 */
+.yao-yin.dong::before,
+.yao-yin.dong::after {
+  background: linear-gradient(180deg, var(--color-vermilion) 0%, var(--color-vermilion-deep) 100%);
+  box-shadow: 0 0 0 1px var(--color-vermilion);
+  position: relative;
+}
+
+.yao-yin.dong::after {
+  /* 标记 X */
+  background: var(--color-vermilion);
+  color: var(--color-paper-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  content: '×';
+}
+
+@keyframes yaoAppear {
+  from {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* 占位符（未出现的爻位） */
+.yao-svg-placeholder {
+  width: 80px;
+  height: 8px;
+  border: 1px dashed var(--color-paper-deep);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+/* 保留旧版进度条（兼容） */
+.divination-progress {
+  margin-top: var(--space-6);
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.progress-yao {
+  font-family: var(--font-title);
+  font-size: var(--text-base);
+  color: var(--color-ink);
+  opacity: 0;
+  transform: translateY(8px);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-paper-light);
+  border: 1px solid var(--color-paper-mid);
+  border-left: 3px solid var(--color-vermilion);
+  border-radius: var(--radius-sm);
+  letter-spacing: var(--tracking-wide);
+  transition: all var(--duration-normal) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+
+.progress-yao.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   十二、结果页 Header
+   ============================================================ */
+
+.result-page {
+  justify-content: flex-start;
+  padding: 0;
+  background: var(--color-paper-base);
+}
+
+.result-header {
+  position: relative;
+  width: 100%;
+  padding: calc(var(--space-3) + var(--safe-top)) var(--space-4) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-paper-light);
+  border-bottom: 1px solid var(--color-paper-mid);
+  box-shadow: var(--shadow-xs);
+  z-index: var(--z-header);
+}
+
+.result-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--color-vermilion);
+  border-radius: 2px 2px 0 0;
+}
+
+.back-btn {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-qing);
+  background: transparent;
+  border: 1px solid var(--color-paper-mid);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  letter-spacing: var(--tracking-wide);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.back-btn:hover {
+  border-color: var(--color-ink-qing);
+  background: var(--color-ink-qing);
+  color: var(--color-paper-light);
+}
+
+.result-title {
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-cn-lg);
+  position: relative;
+  padding: 0 var(--space-4);
+}
+
+.result-title::before,
+.result-title::after {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 1px;
+  background: var(--color-vermilion);
+  vertical-align: middle;
+  margin: 0 var(--space-2);
+  opacity: 0.6;
+}
+
+.result-actions {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: var(--space-1);
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-paper-mid);
+  border-radius: var(--radius-circle);
+  cursor: pointer;
+  color: var(--color-ink-qing);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: var(--color-vermilion);
+  color: var(--color-paper-light);
+  border-color: var(--color-vermilion);
+}
+
+.icon-btn.active {
+  background: var(--color-vermilion);
+  color: var(--color-paper-light);
+  border-color: var(--color-vermilion);
+}
+
+/* ============================================================
+   十三、结果内容区
+   ============================================================ */
+
+.result-content {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-4) calc(var(--space-8) + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ============================================================
+   十四、结果卡片（宣纸底纹 + 印章式签级）
+   ============================================================ */
+
+.result-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--color-paper-light);
+  border: 1px solid var(--color-paper-mid);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-4) var(--space-4);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-paper);
+  animation: cardEnter var(--duration-slow) var(--ease-out);
+  overflow: hidden;
+}
+
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 卡片顶部回纹装饰线（CSS 实现） */
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 3px;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--color-vermilion) 20%,
+      var(--color-gold) 50%,
+      var(--color-vermilion) 80%,
+      transparent 100%);
+  opacity: 0.8;
+  border-radius: 0 0 2px 2px;
+}
+
+/* 卡片左上角 - SVG 回纹 */
+.result-card::after {
+  content: '';
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  width: 28px;
+  height: 28px;
+  background-image: url('../images/corner-ornament.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* 卡片右下角 - 反向回纹（用 transform 翻转） */
+.result-card .corner-deco-tr {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 28px;
+  height: 28px;
+  background-image: url('../images/corner-ornament.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+/* ============================================================
+   十五、签诗结果卡
+   ============================================================ */
+
+.qian-result-card .qian-id {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-ink-light);
+  margin-bottom: var(--space-2);
+  letter-spacing: var(--tracking-wide);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* 签级：印章样式 */
+.qian-result-card .qian-level {
+  display: inline-block;
+  padding: 3px 14px;
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-paper-light);
+  margin: 0 auto var(--space-4);
+  letter-spacing: var(--tracking-cn);
+  border-radius: var(--radius-xs);
+  box-shadow: 0 1px 2px var(--color-shadow-soft);
+  text-align: center;
+  position: relative;
+  transform: rotate(-1deg);
+}
+
+.qian-level::before,
+.qian-level::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.level-shangshang { background: var(--level-shangshang); }
+.level-shangji    { background: var(--level-shangji); }
+.level-zhongping  { background: var(--level-zhongping); }
+.level-xiaxia     { background: var(--level-xiaxia); }
+
+/* 签名 - 主标题 */
+.qian-result-card .qian-name {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  color: var(--color-vermilion);
+  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-cn-lg);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  line-height: 1.3;
+}
+
+/* 签诗主体 */
+.qian-result-card .qian-poem {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--line-loose);
+  color: var(--color-ink);
+  padding: var(--space-5) var(--space-5);
+  background: linear-gradient(135deg, var(--color-paper-mid) 0%, transparent 100%);
+  border-left: 3px solid var(--color-vermilion);
+  margin-bottom: var(--space-4);
+  position: relative;
+  letter-spacing: 0.05em;
+  text-align: center;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.qian-poem::after {
+  content: '〘';
+  position: absolute;
+  bottom: -2px;
+  right: var(--space-2);
+  font-size: var(--text-lg);
+  color: var(--color-vermilion);
+  opacity: 0.3;
+  font-family: var(--font-title);
+  line-height: 1;
+}
+
+.qian-poem .poem-line {
+  margin-bottom: 4px;
+}
+
+.qian-poem .poem-line:last-child { margin-bottom: 0; }
+
+/* 签文解释 */
+.qian-result-card .qian-explanation {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.95;
+  color: var(--color-ink-mid);
+  padding: var(--space-4) 0 var(--space-2);
+  border-top: 1px dashed var(--color-paper-deep);
+  text-align: justify;
+}
+
+.qian-explanation .text-paragraph {
+  margin-bottom: var(--space-2);
+}
+
+.qian-explanation .text-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   十六、卦象结果卡
+   ============================================================ */
+
+.gua-symbol-display {
+  font-size: 32px;
+  text-align: center;
+  margin: var(--space-1) 0 var(--space-2);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.4;
+  letter-spacing: 4px;
+}
+
+.gua-symbol-display .yao-symbol-line {
+  display: block;
+}
+
+/* 结果卡中的爻线（替代 Unicode，用 CSS 渲染） */
+.yao-result-line {
+  animation: none !important;
+  opacity: 1 !important;
+  margin: 3px auto;
+}
+
+.gua-symbol-display .dong-mark {
+  font-size: var(--text-base);
+  color: var(--color-vermilion);
+  font-weight: var(--weight-bold);
+  margin-left: 2px;
+}
+
+.gua-result-card .gua-name {
+  font-family: var(--font-title);
+  font-size: var(--text-xl);
+  color: var(--color-vermilion);
+  text-align: center;
+  margin-bottom: var(--space-1);
+  letter-spacing: var(--tracking-cn-lg);
+}
+
+.gua-result-card .gua-combo {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--color-ink-light);
+  text-align: center;
+  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-wide);
+}
+
+.gua-result-card .gua-text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.85;
+  color: var(--color-ink);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--color-paper-mid) 0%, transparent 100%);
+  border-left: 3px solid var(--color-vermilion);
+  margin-bottom: var(--space-2);
+  position: relative;
+  letter-spacing: 0.05em;
+  text-align: justify;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.gua-result-card .gua-xiang {
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-mid);
+  margin-bottom: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-paper-mid);
+  border-radius: var(--radius-sm);
+  line-height: 1.8;
+  text-align: justify;
+  border: 1px solid var(--color-paper-deep);
+}
+
+/* 变卦区 */
+.bian-gua-section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px dashed var(--color-paper-deep);
+  position: relative;
+}
+
+/* 变卦分隔处小印章 */
+.bian-gua-section::before {
+  content: '变';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-paper-light);
+  padding: 2px 10px;
+  font-family: var(--font-title);
+  font-size: var(--text-xs);
+  color: var(--color-vermilion);
+  border: 1px solid var(--color-vermilion);
+  border-radius: var(--radius-xs);
+  letter-spacing: 0;
+}
+
+.bian-gua-section .bian-label {
+  font-family: var(--font-title);
+  font-size: var(--text-base);
+  color: var(--color-ink-qing);
+  margin-bottom: var(--space-3);
+  letter-spacing: var(--tracking-cn);
+  text-align: center;
+  font-weight: var(--weight-semibold);
+}
+
+/* 动爻爻辞 */
+.dong-yaoci {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px dashed var(--color-paper-deep);
+}
+
+.dong-yaoci .bian-label {
+  font-family: var(--font-title);
+  font-size: var(--text-base);
+  color: var(--color-ink-qing);
+  margin-bottom: var(--space-3);
+  letter-spacing: var(--tracking-cn);
+  text-align: center;
+  font-weight: var(--weight-semibold);
+}
+
+.dong-yaoci .dong-yao-item {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  background: rgba(180, 58, 58, 0.04);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-vermilion);
+  position: relative;
+  cursor: pointer;
+}
+
+.dong-yaoci .dong-yao-item > summary.yao-position {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+.dong-yaoci .dong-yao-item > summary.yao-position::-webkit-details-marker {
+  display: none;
+}
+
+.dong-yaoci .dong-yao-item > summary.yao-position::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--color-vermilion);
+  transition: transform 0.2s ease;
+}
+
+.dong-yaoci .dong-yao-item[open] > summary.yao-position::before {
+  transform: rotate(90deg);
+}
+
+.dong-yao-item[open] > .yao-text,
+.dong-yao-item[open] > .yao-sub-section {
+  margin-top: var(--space-2);
+}
+
+.dong-yao-item .yao-position {
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-vermilion);
+  margin-bottom: 0;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-semibold);
+  display: inline;
+}
+
+.dong-yao-item .yao-text {
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  line-height: 1.95;
+  font-family: var(--font-body);
+  text-align: justify;
+  margin-bottom: var(--space-2);
+}
+
+.yao-sub-section {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  line-height: 1.85;
+  color: var(--color-ink-light);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-paper-deep);
+  text-align: justify;
+}
+
+.yao-sub-label {
+  font-family: var(--font-title);
+  color: var(--color-ink-qing);
+  font-size: var(--text-xs);
+  margin-right: var(--space-1);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* 不变卦提示 */
+.no-bian-tip {
+  text-align: center;
+  margin-top: var(--space-5);
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-light);
+  letter-spacing: var(--tracking-cn);
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-paper-mid);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-paper-deep);
+}
+
+/* ============================================================
+   十七、分隔线与板块标题
+   ============================================================ */
+
+.deco-line {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-vermilion) 50%, transparent);
+  margin: var(--space-4) auto;
+  opacity: 0.4;
+  position: relative;
+}
+
+.deco-line::before {
+  content: '◇';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-paper-light);
+  color: var(--color-vermilion);
+  font-size: var(--text-sm);
+  padding: 0 var(--space-2);
+  line-height: 0;
+  opacity: 0.6;
+}
+
+.section-label {
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  color: var(--color-ink-qing);
+  letter-spacing: var(--tracking-cn);
+  margin: var(--space-3) 0 var(--space-2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.section-label:hover {
+  color: var(--color-vermilion);
+}
+
+.section-label::before,
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-paper-deep));
+  opacity: 0.6;
+}
+
+.section-label::after {
+  background: linear-gradient(90deg, var(--color-paper-deep), transparent);
+}
+
+/* 可折叠指示器 */
+.section-label::marker { display: none; }
+details.section-block > summary.section-label {
+  list-style: none;
+}
+details.section-block > summary.section-label::-webkit-details-marker { display: none; }
+details.section-block > summary.section-label::before {
+  background: none;
+  flex: 0 0 8px;
+  width: 8px; height: 8px;
+  border-right: 1.5px solid var(--color-vermilion);
+  border-bottom: 1.5px solid var(--color-vermilion);
+  transform: rotate(45deg);
+  margin-right: var(--space-2);
+  transition: transform 0.2s ease;
+  opacity: 1;
+}
+details.section-block[open] > summary.section-label::before {
+  transform: rotate(-135deg);
+}
+
+.section-content {
+  display: block !important;
+  font-size: var(--text-sm);
+  line-height: 1.85;
+  color: var(--color-ink-mid);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-1);
+  text-align: justify;
+  font-family: var(--font-body);
+  min-height: 1em;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible;
+}
+
+.section-content .text-paragraph {
+  color: var(--color-ink-mid);
+  margin-bottom: var(--space-2);
+}
+
+
+.section-content .text-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.baihua-section {
+  background: rgba(180, 58, 58, 0.04);
+  border-left: 2px solid var(--color-vermilion);
+}
+
+.duanyi-section {
+  background: rgba(200, 148, 24, 0.06);
+  border-left: 2px solid var(--color-gold);
+  color: var(--color-ink-mid);
+}
+
+.shaoyong-section {
+  background: rgba(95, 154, 154, 0.05);
+  border-left: 2px solid var(--color-ink-qing);
+}
+
+.chuantong-section {
+  background: rgba(180, 58, 58, 0.04);
+  border-left: 2px solid var(--color-vermilion);
+}
+
+/* ============================================================
+   十八、通用动画
+   ============================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 签弹出动画 */
+.sign-falling {
+  position: absolute;
+  width: 4px;
+  height: 70px;
+  background: linear-gradient(180deg,
+    var(--color-vermilion) 0%,
+    var(--color-paper-light) 50%,
+    var(--color-paper-mid) 100%);
+  border-radius: 2px;
+  animation: signFall 0.8s var(--ease-out) forwards;
+  z-index: 10;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 8px var(--color-shadow-mid);
+}
+
+@keyframes signFall {
+  0%   { opacity: 0; transform: translate(-50%, -120px) rotate(-20deg); }
+  30%  { opacity: 1; }
+  60%  { opacity: 1; transform: translate(-50%, 20px) rotate(5deg); }
+  100% { opacity: 0; transform: translate(-50%, 40px) rotate(0deg); }
+}
+
+/* ============================================================
+   十九、引导浮层（首次访问）
+   ============================================================ */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(244, 236, 221, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: var(--space-6);
+  animation: fadeIn var(--duration-slow) var(--ease-out);
+  text-align: center;
+}
+
+.intro-overlay.hidden {
+  animation: fadeOut var(--duration-slow) var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+.intro-seal {
+  width: 64px;
+  height: 64px;
+  background: var(--color-vermilion);
+  color: var(--color-paper-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-size: 36px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--space-6);
+  transform: rotate(-3deg);
+}
+
+.intro-title {
+  font-family: var(--font-title);
+  font-size: var(--text-3xl);
+  color: var(--color-ink-qing);
+  letter-spacing: var(--tracking-cn-lg);
+  margin-bottom: var(--space-3);
+}
+
+.intro-phrase {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-ink-mid);
+  letter-spacing: var(--tracking-cn);
+  margin-bottom: var(--space-2);
+  opacity: 0;
+  animation: phraseIn var(--duration-slow) var(--ease-out) forwards;
+}
+
+.intro-phrase:nth-child(2) { animation-delay: 0.6s; }
+.intro-phrase:nth-child(3) { animation-delay: 1.2s; }
+.intro-phrase:nth-child(4) { animation-delay: 1.8s; }
+
+@keyframes phraseIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.intro-btn {
+  margin-top: var(--space-8);
+  opacity: 0;
+  animation: phraseIn var(--duration-slow) var(--ease-out) 2.4s forwards;
+}
+
+/* ============================================================
+   二十、Toast 提示
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  bottom: calc(var(--space-8) + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-ink-qing);
+  color: var(--color-paper-light);
+  font-family: var(--font-title);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  animation: toastIn var(--duration-normal) var(--ease-spring), toastOut var(--duration-slow) 2s forwards;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 16px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translate(-50%, -8px); }
+}
+
+/* ============================================================
+   二十一、响应式断点
+   ============================================================ */
+
+/* 小屏手机 (< 360px) */
+@media (max-width: 359px) {
+  .header h1 { font-size: var(--text-xl); }
+  .sign-container { width: 180px; height: 280px; }
+  .taiji-container { width: 280px; height: 280px; }
+  .taiji-container .bagua-decoration { width: 280px; height: 280px; }
+  .taiji-img { width: 110px; height: 110px; }
+  .action-btn { min-width: 180px; padding: var(--space-3) var(--space-8); font-size: var(--text-base); }
+  .gua-symbol-display { font-size: 36px; }
+}
+
+/* 默认手机 */
+@media (max-width: 480px) {
+  .header h1 { font-size: var(--text-xl); letter-spacing: var(--tracking-cn); }
+  .tab-item { font-size: var(--text-base); }
+  .action-btn { font-size: var(--text-base); padding: var(--space-3) var(--space-8); }
+  .result-card { padding: var(--space-6) var(--space-4) var(--space-5); }
+  .qian-poem, .gua-text { font-size: var(--text-base); }
+  .gua-name { font-size: var(--text-xl); }
+}
+
+/* 平板及以上 */
+@media (min-width: 640px) {
+  .page { padding: var(--space-8) var(--space-6); }
+  .sign-container { width: 240px; height: 360px; }
+  .taiji-container { width: 380px; height: 380px; }
+  .taiji-container .bagua-decoration { width: 380px; height: 380px; }
+  .taiji-img { width: 150px; height: 150px; }
+  .gua-symbol-display { font-size: 56px; }
+  .qian-name, .gua-name { font-size: 32px; }
+}
+
+/* 桌面 */
+@media (min-width: 1024px) {
+  .app-container {
+    margin: var(--space-4) auto;
+    min-height: calc(100vh - var(--space-8));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .header { padding-top: calc(var(--space-5) + var(--safe-top)); }
+}
+
+/* ============================================================
+   二十二、滚动条美化
+   ============================================================ */
+
+.page-area::-webkit-scrollbar,
+.result-content::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.page-area::-webkit-scrollbar-thumb,
+.result-content::-webkit-scrollbar-thumb {
+  background: var(--color-paper-deep);
+  border-radius: 2px;
+}
+
+.page-area::-webkit-scrollbar-thumb:hover,
+.result-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-vermilion);
+}
+
+.page-area::-webkit-scrollbar-track,
+.result-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox 滚动条 */
+.page-area, .result-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-paper-deep) transparent;
+}
+
+/* ============================================================
+   二十三、辅助类
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 隐藏旧版 CSS 签筒 */
+.tube-body, .tube-top, .tube-middle, .tube-bottom, .tube-stick {
+  display: none !important;
+}
