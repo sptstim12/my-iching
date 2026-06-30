@@ -418,6 +418,7 @@ body {
   object-fit: contain;
   z-index: 1;
   animation: taijiBreath 4s var(--ease-in-out) infinite;
+  /* 占位渐变放在 ::before 上，避免遮住图片本体 */
 }
 
 @keyframes taijiBreath {
