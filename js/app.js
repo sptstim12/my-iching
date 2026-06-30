@@ -1,7 +1,7 @@
 /**
  * 易经灵机 - 主交互逻辑 v2
  * SPA 单页应用，无框架，纯原生JS
- * 升级内容：首次引导、Tab 切换动画、收藏、Toast、再求一签
+ * 升级内容：首次引导、Tab 切换动画、收藏、Toast
  *
  * 数据文件通过 script 标签以普通变量形式引入
  * qianList 和 gua64List 为全局变量
@@ -97,15 +97,6 @@ function toggleFavorite() {
   }
   updateFavBtn();
   showToast(willAdd ? '已收藏' : '已取消收藏');
-}
-
-// ============ 再求一签 ============
-function tryAgain() {
-  if (currentResult && currentResult.mode === 'qian') {
-    startShake();
-  } else if (currentResult && currentResult.mode === 'gua') {
-    startDivination();
-  }
 }
 
 // ============ Tab切换 ============
@@ -292,7 +283,7 @@ function startDivination() {
 
   // 太极图加速旋转
   taiji.classList.add('spinning');
-  taiji.style.animation = 'taijiSpin 1.4s linear infinite';
+  taiji.style.animation = 'taijiSpin 1.8s linear infinite';
 
   // 重置卦象堆叠区 - 清空所有爻位
   for (let i = 0; i < 6; i++) {
@@ -329,10 +320,10 @@ function startDivination() {
         stackLabel.textContent = YAO_NAMES[i] + '...';
         stackLabel.classList.add('active');
       }
-    }, delay + i * 350);
+    }, delay + i * 500);
   });
 
-  const totalDelay = delay + 6 * 350 + 1000;
+  const totalDelay = delay + 6 * 500 + 1200;
   setTimeout(() => {
     // 恢复太极图动画
     taiji.classList.remove('spinning');

@@ -427,7 +427,7 @@ body {
 
 /* 起卦中 - 太极快速旋转 */
 .taiji-container.spinning {
-  animation: taijiSpin 1.4s linear infinite;
+  animation: taijiSpin 1.8s linear infinite;
 }
 
 @keyframes taijiSpin {
@@ -808,6 +808,9 @@ body {
   padding: 0;
   background: var(--color-paper-base);
   overflow: hidden;
+  /* 让内部 .result-content 接管滚动（.page 用 absolute inset:0 截断了高度传递） */
+  display: flex;
+  flex-direction: column;
 }
 
 .result-header {
@@ -922,10 +925,12 @@ body {
    ============================================================ */
 
 .result-content {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: var(--space-3) var(--space-4) calc(var(--space-8) + var(--safe-bottom));
   display: flex;
   flex-direction: column;
@@ -1513,9 +1518,13 @@ body {
   animation: phraseIn var(--duration-slow) var(--ease-out) forwards;
 }
 
-.intro-phrase:nth-child(2) { animation-delay: 0.6s; }
-.intro-phrase:nth-child(3) { animation-delay: 1.2s; }
-.intro-phrase:nth-child(4) { animation-delay: 1.8s; }
+/* 视觉出场顺序：静心 → 诚心 → 问心 → 红字提示 → 入门按钮 */
+.intro-seal  { animation: phraseIn var(--duration-slow) var(--ease-out) 0.1s both; }
+.intro-title { animation: phraseIn var(--duration-slow) var(--ease-out) 0.3s both; }
+.intro-phrase[data-step="1"] { animation-delay: 0.9s; }   /* 静心 */
+.intro-phrase[data-step="2"] { animation-delay: 1.5s; }   /* 诚心 */
+.intro-phrase[data-step="3"] { animation-delay: 2.1s; }   /* 问心 */
+.intro-phrase[data-step="4"] { animation-delay: 2.7s; }   /* 红字提示 */
 
 @keyframes phraseIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -1525,7 +1534,7 @@ body {
 .intro-btn {
   margin-top: var(--space-8);
   opacity: 0;
-  animation: phraseIn var(--duration-slow) var(--ease-out) 2.4s forwards;
+  animation: phraseIn var(--duration-slow) var(--ease-out) 3.3s forwards;
 }
 
 /* ============================================================
